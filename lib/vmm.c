@@ -347,11 +347,18 @@ vmm_write_msr(hv_x86_reg_t reg, uint64_t val) {
   }
 }
 
+static inline const char* vmcs_field_to_str(uint32_t vmcs_field) {
+    for (unsigned long i=0; i < elementsof(vmcs_field_list); i++) {
+        if (vmcs_field_list[i] == vmcs_field) return vmcs_field_str[i];
+    }
+    return "???";
+}
+
 void
 vmm_read_vmcs(uint32_t field, uint64_t *val)
 {
   if (hv_vmx_vcpu_read_vmcs(vcpu->vcpuid, field, val) != HV_SUCCESS) {
-    fprintf(stderr, "read_vmcs failed\n");
+    fprintf(stderr, "read_vmcs failed: %s\n", vmcs_field_to_str(field));
     abort();
   }
 }
@@ -360,8 +367,8 @@ void
 vmm_write_vmcs(hv_x86_reg_t field, uint64_t val) {
   if (hv_vmx_vcpu_write_vmcs(vcpu->vcpuid, field, val) != HV_SUCCESS) {
     /* FIXME! it fails for the VMCS_CTRL_TSC_OFFSET field on some platforms */
-    //fprintf(stderr, "write_vmcs failed: %s\n", vmcs_field_to_str(field));
-    //    abort();
+    fprintf(stderr, "write_vmcs failed: %s\n", vmcs_field_to_str(field));
+    abort();
   }
 }
 
