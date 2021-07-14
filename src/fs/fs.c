@@ -1317,8 +1317,12 @@ DEFINE_SYSCALL(newfstatat, int, dirfd, gstr_t, path_ptr, gaddr_t, st_ptr, int, f
 {
   char pathname[LINUX_PATH_MAX];
   strncpy_from_user(pathname, path_ptr, sizeof pathname);
-  if (flags & ~(LINUX_AT_SYMLINK_NOFOLLOW)) {
+  if (flags & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH)) {
     return -LINUX_EINVAL;
+  }
+  if (flags & LINUX_AT_EMPTY_PATH && pathname[0] == 0) {
+    // TODO: currently simple calling fstat, but thats OK?
+    return sys_fstat(dirfd, st_ptr);
   }
   int grab_flags = flags & LINUX_AT_SYMLINK_NOFOLLOW ? LOOKUP_NOFOLLOW : 0;
   struct path path;
