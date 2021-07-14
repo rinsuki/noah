@@ -348,7 +348,7 @@ vmm_write_msr(hv_x86_reg_t reg, uint64_t val) {
 }
 
 void
-vmm_read_vmcs(hv_x86_reg_t field, uint64_t *val)
+vmm_read_vmcs(uint32_t field, uint64_t *val)
 {
   if (hv_vmx_vcpu_read_vmcs(vcpu->vcpuid, field, val) != HV_SUCCESS) {
     fprintf(stderr, "read_vmcs failed\n");
