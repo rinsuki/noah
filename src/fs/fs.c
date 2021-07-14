@@ -332,7 +332,7 @@ darwinfs_lseek(struct file *file, l_off_t offset, int whence)
 ssize_t
 darwin_to_linux_dent(struct dirent *d_dent, void *l_dent, size_t buflen, int is64)
 {
-  unsigned reclen = roundup(is64 ? offsetof(struct l_dirent64, d_name) : offsetof(struct l_dirent, d_name) + d_dent->d_namlen + 2, 8);
+  unsigned reclen = roundup((is64 ? offsetof(struct l_dirent64, d_name) : offsetof(struct l_dirent, d_name)) + d_dent->d_namlen + 2, 8);
   if (reclen > buflen) {
     return -1;
   }
