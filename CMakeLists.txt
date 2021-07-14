@@ -40,6 +40,7 @@ add_executable(noah
   src/ipc/sem.c
   )
 target_link_libraries(noah ${PTHREAD_LIBRARY} ${HYPERVISOR_FRAMEWORK})
+set_target_properties(noah PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS src/noah.entitlements)
 
 install(PROGRAMS bin/noah DESTINATION bin)
 install(TARGETS noah DESTINATION libexec)
