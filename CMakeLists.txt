@@ -13,7 +13,7 @@ find_library(HYPERVISOR_FRAMEWORK Hypervisor)
 find_library(PTHREAD_LIBRARY pthread)
 
 set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -std=gnu11")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -g -fsanitize=address -fno-omit-frame-pointer")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -g -fno-omit-frame-pointer")
 include_directories(include)
 
 add_executable(noah
