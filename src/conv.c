@@ -131,6 +131,10 @@ darwin_to_linux_o_flags(int r)
   TEST(O_NOFOLLOW, LINUX_O_NOFOLLOW);
   TEST(O_DIRECTORY, LINUX_O_DIRECTORY);
   TEST(O_CLOEXEC, LINUX_O_CLOEXEC);
+  // If stdin is terminal, Darwin notifies unknown (internal?) 0x10000 flag.
+  // seems FWASWRITTEN (only used to do something inside of kernel?)
+  // https://github.com/apple/darwin-xnu/blob/2ff845c2e033bd0ff64b5b6aa6063a1f8f65aa32/bsd/sys/fcntl.h#L142
+  TEST(0x10000, 0);
   assert(r == 0);
   return flags;
 }
