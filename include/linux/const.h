@@ -25,7 +25,7 @@
 #define DECL_ALIAS(tag, const_name, val)      DECL_ALIAS_ ## tag (LINUX_ ## const_name, val)
 #define FROM_DARWN(tag, const_name, val)      FROM_DARWN_ ## tag (LINUX_ ## const_name, val)
 
-#define LINUX_SPECIFIC (-10 -__COUNTER__)  // Unique value that does not conflict with any linux constants
+#define LINUX_SPECIFIC (-0x10000 -__COUNTER__)  // Unique value that does not conflict with any linux constants
 
 #define DECLARE_CSTR_FUNC(const_id, const_list) \
   static inline char * linux_##const_id##_##str(int val) {\
