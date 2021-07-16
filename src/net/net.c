@@ -203,6 +203,10 @@ to_host_sockopt_name(int name)
 DEFINE_SYSCALL(setsockopt, int, fd, int, level, int, optname, gaddr_t, optval_ptr, uint, opt_len)
 {
   int r;
+  // HACK: if SO_NO_CHECK passed, simply ignore it
+  if (optname == LINUX_SO_NO_CHECK) {
+    return 0;
+  }
   char *optval = malloc(opt_len);
   
   if (copy_from_user(optval, optval_ptr, opt_len)) {
