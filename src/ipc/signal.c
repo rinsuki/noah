@@ -340,15 +340,19 @@ DEFINE_SYSCALL(rt_sigaction, int, sig, gaddr_t, act, gaddr_t, oact, size_t, size
   // TODO: make handlings of linux specific signals consistent
 
   int err = 0;
-  pthread_rwlock_wrlock(&proc.sig_lock);
+  if (dsig < 0) {
+    // linux specific signals
+    // currently simply ignore it
+  } else {
+    pthread_rwlock_wrlock(&proc.sig_lock);
 
-  err = syswrap(sigaction(dsig, &dact, &doact));
-  if (err >= 0) {
-    proc.sigaction[sig - 1] = lact;
+    err = syswrap(sigaction(dsig, &dact, &doact));
+    if (err >= 0) {
+      proc.sigaction[sig - 1] = lact;
+    }
+
+    pthread_rwlock_unlock(&proc.sig_lock);
   }
-
-  pthread_rwlock_unlock(&proc.sig_lock);
-
   return err;
 }
 
