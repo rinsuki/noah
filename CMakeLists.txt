@@ -39,6 +39,7 @@ add_executable(noah
   src/proc/ptrace.c
   src/mm/shm.c
   src/ipc/sem.c
+  src/sched.c
   ${HEADER_FILES}
   )
 target_include_directories(noah PRIVATE include)

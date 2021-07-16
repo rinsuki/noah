@@ -146,7 +146,7 @@
   SYSCALL(142, unimplemented)                   \
   SYSCALL(143, unimplemented)                   \
   SYSCALL(144, unimplemented)                   \
-  SYSCALL(145, unimplemented)                   \
+  SYSCALL(145, sched_getscheduler)              \
   SYSCALL(146, unimplemented)                   \
   SYSCALL(147, unimplemented)                   \
   SYSCALL(148, unimplemented)                   \
